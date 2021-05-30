@@ -5,18 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather Dashboard</title>
-    <!-- Link scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    
 
     <!-- Link boostrap -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     />
-
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Link css / styles -->
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
@@ -25,7 +22,7 @@
     <!-- Nav Bar Start -->
     <nav class="bg-dark text-white text-center">
       <h1>Weather Dashboard</h1>
-      <p id="currentDay" class="Date"></p>
+      <p id="currentDay" class="Date" ></p>
     </nav>
     <!-- Nav Bar End -->
 
@@ -34,21 +31,25 @@
         <h2 class="text-center">Enter City Here</h2>
       <div class="search">
           
-            <input type="text" placeholder="City Here" name="search" class="searchInput" />
-            <button type="submit" class="searchBtn"><i class="fa fa-search"></i></button>
+            <input type="text" placeholder="City Here" name="search" class="searchInput" id="searchCityInput" />
+            <button type="submit" class="searchBtn" id="submitBtn"><i class="fa fa-search"></i></button>
         </div>
       </div>
     </div>
     <!-- Search bar with Jumbotron End -->
 
-    <div class="recent">
-        <h3>Recent Cities:</h3>
-        <p id="recentCities"></p>
+    <!-- Recent Cities List Start -->
+    <div>
+      <h2>Recent Cities Here:</h2>
+        <form id="searchedCities" class="mt-1">
+        </form>
     </div>
+    <!-- Recent Cities List End -->
+
 
     
-
-    <!-- Include Javascript -->
-    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./assets/js/script.js"></script>
   </body>
 </html>
