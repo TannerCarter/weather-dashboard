@@ -25,4 +25,4 @@ Then they are again presented with current and future conditions for that city
 
 # Links
 
-[Tanner Carter's Weather Dashboard | Version 1](https://tannercarter.github.io/tanner-carter-portfolio/ )
+[Tanner Carter's Weather Dashboard | Version 1](https://tannercarter.github.io/weather-dashboard/ )
