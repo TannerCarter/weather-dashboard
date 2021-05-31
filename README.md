@@ -8,16 +8,16 @@ In this project we used a server sided API to fetch data and parse selected data
 
 # Tasks
 
-When the user opens the weather dashboard with form inputs
-They can search for a city
-The user is presented with current and future conditions for that city and that city is added to the search history after searching in the search bar - input.
-When the user views current weather conditions for that city
-Then they are presented with the city name, the date, and an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-The UV index will present a color that indicates whether the conditions are favorable, moderate, or severe.
-When the user views the future weather conditions for that city
-Then they are presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
-When the user clicks on a city in the search history
-Then they are again presented with current and future conditions for that city
+- When the user opens the weather dashboard with form inputs
+- They can search for a city
+- The user is presented with current and future conditions for that city and that city is added to the search history after searching in the search bar - input.
+- When the user views current weather conditions for that city
+- Then they are presented with the city name, the date, and an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
+- The UV index will present a color that indicates whether the conditions are favorable, moderate, or severe.
+- When the user views the future weather conditions for that city
+- Then they are presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
+- When the user clicks on a city in the search history
+- Then they are again presented with current and future conditions for that city
 
 # Product
 
