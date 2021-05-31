@@ -38,30 +38,28 @@
     </div>
     <!-- Search bar with Jumbotron End -->
 
-    <!-- 5 Day Cards Start -->
-    <div class="col-8 float-right">
-      <div class="card bg-light rounded" style="width: 710; height: 25rem;">
-        <div id="current"></div>
-          <div id="uv1-display"></div>
-      </div>
-        <br>
-        <h2>5 Day Forecast:</h2>
-      <div id="5day" class="row">
-
-    </div>
-    <!-- 5 Day Cards End -->
-
     <!-- Recent Cities List Start -->
-    <div class="card bg-light">
+    <div class="float-left col-4">
       <h2>Recent Cities List:</h2>
-        <form id="searchedCities" class="" class="mt-1">
+        <form id="searchedCities" class="card bg-light cityBox" class="mt-1">
          
         </form>
     </div>
+     
     <!-- Recent Cities List End -->
 
+    <!-- 5 Day Cards Start -->
+    <div class="col-8 float-right text-center">
+      <h2 class="text-center"> 5 Day Forecast:</h2>
+      <div class="card bg-light rounded" style="width: 710; height: 26rem;">
+        <div id="current"></div>
+        <!--  -->
+        <div id="displayUVL"></div>
+        <div id="5day" class="row text-center"></div>
+      </div>
+    </div>  
+    <!-- 5 Day Cards End -->
 
-    
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>

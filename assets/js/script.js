@@ -2,19 +2,177 @@
 var currentDate = moment().format("dddd, MMM Do YYYY");
 $("#currentDay").text(currentDate);
 
-//Pull data from api
+//localStorage.clear();
+
+//Weather API
 function searchCity(cityname) {
   var weatherAPI =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     cityname +
     "&units=imperial&appid=14b32f18d69f6d40751829360937d877";
+  //Forecast API
+  var weatherForecast =
+    "https://api.openweathermap.org/data/2.5/forecast?q=" +
+    cityname +
+    "&units=imperial&appid=14b32f18d69f6d40751829360937d877";
 
+  //Pull Weather
   $.ajax({
     url: weatherAPI,
     method: "GET",
+  })
+    .then(function (response) {
+      console.log(response);
+      console.log(weatherAPI);
+
+      $("#current").empty();
+
+      var cityNameEl = $("<h3>").text(response.name);
+      var displayMainDate = cityNameEl.append(" " + currentDate);
+      var tempEL = $("<p>").text("Temperature: " + response.main.temp);
+      var humEl = $("<p>").text("Humidity: " + response.main.humidity);
+      var windEl = $("<p>").text("Wind Speed: " + response.wind.speed);
+      var currentweather = response.weather[0].main;
+
+      if (currentweather === "Rain") {
+        var currentIcon = $("<img>").attr(
+          "src",
+          "http://openweathermap.org/img/wn/09d.png"
+        );
+        currentIcon.attr("style", "height: 60px; width: 60px");
+      } else if (currentweather === "Clouds") {
+        var currentIcon = $("<img>").attr(
+          "src",
+          "http://openweathermap.org/img/wn/03d.png"
+        );
+        currentIcon.attr("style", "height: 60px; width: 60px");
+      } else if (currentweather === "Clear") {
+        var currentIcon = $("<img>").attr(
+          "src",
+          "http://openweathermap.org/img/wn/01d.png"
+        );
+        currentIcon.attr("style", "height: 60px; width: 60px");
+      } else if (currentweather === "Drizzle") {
+        var currentIcon = $("<img>").attr(
+          "src",
+          "http://openweathermap.org/img/wn/10d.png"
+        );
+        currentIcon.attr("style", "height: 60px; width: 60px");
+      } else if (currentweather === "Snow") {
+        var currentIcon = $("<img>").attr(
+          "src",
+          "http://openweathermap.org/img/wn/13d.png"
+        );
+        currentIcon.attr("style", "height: 60px; width: 60px");
+      }
+
+      var newDiv = $("<div>");
+
+      newDiv.append(displayMainDate, currentIcon, tempEL, humEl, windEl);
+
+      $("#current").html(newDiv);
+
+      var lat = response.coord.lat;
+      var lon = response.coord.lon;
+      var uvAP =
+        "https://api.openweathermap.org/data/2.5/uvi?&appid=ecc0be5fd92206da3aa90cc41c13ca56&lat=" +
+        lat +
+        "&lon=" +
+        lon;
+
+      $.ajax({
+        url: uvAP,
+        method: "GET",
+      }).then(function (response) {
+        $("#displayUVL").empty();
+
+        var uvlEl = $("<button class='btn bg-success'>").text(
+          "UV Index: " + response.value
+        );
+
+        $("#displayUVL").html(uvlEl);
+      });
+      var storearr = JSON.parse(localStorage.getItem("cityName"));
+      if (storearr == null) {
+        storearr = [];
+      }
+      var cityInput = $("#searchCityInput").val().trim();
+      if (!storearr.includes(cityInput)) {
+        console.log("saving city");
+        console.log(cityInput);
+        storearr.push(cityInput);
+      }
+      localStorage.setItem("cityName", JSON.stringify(storearr));
+
+      loadPage();
+    })
+    .catch((err) => {
+      alert("Incorrect City Name!");
+    });
+
+  $.ajax({
+    url: weatherForecast,
+    method: "GET",
   }).then(function (response) {
-    console.log(response);
-    console.log(weatherAPI);
+    var results = response.list;
+
+    $("#5day").empty();
+
+    for (var i = 0; i < results.length; i += 8) {
+      var fiveDayDiv = $(
+        "<div class='card shadow-lg text-white bg-primary mx-auto p-1' style='width: 8.5rem; height: 9.5rem;'>"
+      );
+
+      var date = results[i].dt_txt;
+      var setD = date.substr(0, 10);
+      var temp = results[i].main.temp;
+      var hum = results[i].main.humidity;
+
+      var h5date = $("<h5 class='card-title text-center'>").text(setD);
+      var pTemp = $("<p class='card-text'>").text("Temp: " + temp);
+      var pHum = $("<p class='card-text'>").text("Humidity: " + hum);
+
+      var weather = results[i].weather[0].main;
+
+      if (weather === "Rain") {
+        var icon = $("<img class='icon text-center'>").attr(
+          "src",
+          "http://openweathermap.org/img/wn/09d.png"
+        );
+        icon.attr("style", "height: 40px; width: 40px;");
+      } else if (weather === "Clouds") {
+        var icon = $("<img class='icon text-center'>").attr(
+          "src",
+          "http://openweathermap.org/img/wn/03d.png"
+        );
+        icon.attr("style", "height: 40px; width: 40px;");
+      } else if (weather === "Clear") {
+        var icon = $("<img class='icon text-center'>").attr(
+          "src",
+          "http://openweathermap.org/img/wn/01d.png"
+        );
+        icon.attr("style", "height: 40px; width: 40px;");
+      } else if (weather === "Drizzle") {
+        var icon = $("<img class='icon text-center'>").attr(
+          "src",
+          "http://openweathermap.org/img/wn/10d.png"
+        );
+        icon.attr("style", "height: 40px; width: 40px;");
+      } else if (weather === "Snow") {
+        var icon = $("<img class='icon text-center'>").attr(
+          "src",
+          "http://openweathermap.org/img/wn/13d.png"
+        );
+        icon.attr("style", "height: 40px; width: 40px");
+      }
+
+      //append items to.......
+      fiveDayDiv.append(h5date);
+      fiveDayDiv.append(icon);
+      fiveDayDiv.append(pTemp);
+      fiveDayDiv.append(pHum);
+      $("#5day").append(fiveDayDiv);
+    }
   });
 }
 loadPage();
@@ -23,24 +181,26 @@ loadPage();
 $("#submitBtn").on("click", function (event) {
   event.preventDefault();
   var cityInput = $("#searchCityInput").val().trim();
-  var textContent = $(this).siblings("input").val();
-  var storearr = [];
-  storearr.push(textContent);
-  localStorage.setItem("cityName", JSON.stringify(storearr));
-
+  if (cityInput.length === 0) return;
   searchCity(cityInput);
-  loadPage();
 });
 
 //Create a new button of search city using local storage
 function loadPage() {
   var recentSearch = JSON.parse(localStorage.getItem("cityName"));
-  var recentList = $(
-    "<button class='btn border text-muted mt-1 shadow-sm bg-white rounded' style='width: 12rem;'>"
-  ).text(recentSearch);
-  var searchList = $("<p>");
-  searchList.append(recentList);
-  $("#searchedCities").prepend(searchList);
+
+  if (recentSearch == null) return;
+
+  $("#searchedCities").empty();
+  recentSearch.forEach((city) => {
+    console.log(city);
+    var cityBtn = $(
+      "<button class='btn border text-muted mt-1 shadow-sm bg-white rounded text-center' style='width: 12rem;'>"
+    ).text(city);
+    var searchList = $("<p>");
+    searchList.append(cityBtn);
+    $("#searchedCities").prepend(searchList);
+  });
 }
 
 $("#searchedCities").on("click", ".btn", function (event) {

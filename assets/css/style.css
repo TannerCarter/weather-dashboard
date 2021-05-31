@@ -23,3 +23,10 @@
   cursor: pointer;
   font-size: 20px;
 }
+.cityBox {
+  height: 26rem;
+  overflow: auto;
+}
+.icon {
+  margin-left: 36%;
+}
