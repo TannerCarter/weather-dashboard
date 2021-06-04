@@ -26,12 +26,13 @@ function searchCity(cityname) {
       console.log(weatherAPI);
 
       $("#current").empty();
+      var pullDate = moment().format("dddd, MMM Do YYYY");
 
       var cityNameEl = $("<h3>").text(response.name);
-      var displayMainDate = cityNameEl.append(" " + currentDate);
-      var tempEL = $("<p>").text("Temperature: " + response.main.temp);
-      var humEl = $("<p>").text("Humidity: " + response.main.humidity);
-      var windEl = $("<p>").text("Wind Speed: " + response.wind.speed);
+      var displayMainDate = cityNameEl.append(" " + pullDate);
+      var tempEL = $("<p>").text("Temperature: " + response.main.temp + "°F");
+      var humEl = $("<p>").text("Humidity: " + response.main.humidity + "%");
+      var windEl = $("<p>").text("Wind Speed: " + response.wind.speed + "mph");
       var currentweather = response.weather[0].main;
 
       if (currentweather === "Rain") {
@@ -85,11 +86,24 @@ function searchCity(cityname) {
         method: "GET",
       }).then(function (response) {
         $("#displayUVL").empty();
+        let uvIndex = response.value;
+        var color = "";
+        if (uvIndex >= 0 && uvIndex < 3) {
+          color = "#3EA72D";
+        } else if (uvIndex >= 3 && uvIndex < 6) {
+          color = "#FFF300";
+        } else if (uvIndex >= 6 && uvIndex < 8) {
+          color = "#F18B00";
+        } else if (uvIndex >= 8 && uvIndex < 11) {
+          color = "#E53210";
+        } else if (uvIndex >= 11) {
+          color = "#B567A4";
+        }
 
-        var uvlEl = $("<button class='btn bg-success'>").text(
-          "UV Index: " + response.value
+        var uvlEl = $("<button class='btn' id='uvlBtn'>").text(
+          "UV Index: " + uvIndex
         );
-
+        $(uvlEl).css("background", color);
         $("#displayUVL").html(uvlEl);
       });
       var storearr = JSON.parse(localStorage.getItem("cityName"));
@@ -120,17 +134,21 @@ function searchCity(cityname) {
 
     for (var i = 0; i < results.length; i += 8) {
       var fiveDayDiv = $(
-        "<div class='card shadow-lg text-white bg-primary mx-auto p-1' style='width: 8.5rem; height: 9.5rem;'>"
+        "<div class='card shadow-lg text-white bg-primary mx-auto p-1' style='width: 8.5rem; height: 13.5rem;'>"
       );
 
       var date = results[i].dt_txt;
       var setD = date.substr(0, 10);
       var temp = results[i].main.temp;
       var hum = results[i].main.humidity;
+      var wind = results[i].wind.speed;
 
       var h5date = $("<h5 class='card-title text-center'>").text(setD);
-      var pTemp = $("<p class='card-text'>").text("Temp: " + temp);
-      var pHum = $("<p class='card-text'>").text("Humidity: " + hum);
+      var pTemp = $("<p class='card-text'>").text("Temp: " + temp + "°F");
+      var pHum = $("<p class='card-text'>").text("Humidity: " + hum + "%");
+      var pWind = $("<p class='card-text'>").text(
+        "Wind Speed: " + wind + "mph"
+      );
 
       var weather = results[i].weather[0].main;
 
@@ -171,6 +189,7 @@ function searchCity(cityname) {
       fiveDayDiv.append(icon);
       fiveDayDiv.append(pTemp);
       fiveDayDiv.append(pHum);
+      fiveDayDiv.append(pWind);
       $("#5day").append(fiveDayDiv);
     }
   });
